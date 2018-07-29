@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react';
 import {
+  Image,
   Platform,
   StyleSheet,
   Text,
@@ -24,6 +25,10 @@ export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
+        <Image
+          source={require('./assets/logo.png')}
+          style={{width:300, height: 80}}
+        />
         <Text style={styles.welcome}>
           Welcome to React Native!
         </Text>
