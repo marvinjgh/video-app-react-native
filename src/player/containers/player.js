@@ -9,6 +9,8 @@ import Layout from '../components/layout';
 import ControlLayout from '../components/control-layout';
 import PlayPause from '../components/play-pause';
 
+// TODO: Completar los botones de control
+
 class Player extends Component {
   state = {
     loading: true,
@@ -30,12 +32,13 @@ class Player extends Component {
     })
   }
   render() {
+    const uri_video= ''//'https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4'
     return (
       <Layout
         loading={this.state.loading}
         video={
           <Video
-            source={{uri: 'https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4'}}
+            source={{uri: uri_video}}
             style={styles.video}
             resizeMode="contain"
             onBuffer={this.onBuffer}
