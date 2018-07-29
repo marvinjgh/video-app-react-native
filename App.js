@@ -6,11 +6,11 @@
 
 import React, { Component } from 'react';
 import {
-  Image,
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  Image,
 } from 'react-native';
 
 const instructions = Platform.select({
@@ -48,7 +48,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: Platform.select({
+      ios: 'blue',
+      android: 'purple',
+    }),
   },
   welcome: {
     fontSize: 20,
