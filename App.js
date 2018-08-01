@@ -11,12 +11,14 @@ import API from './utils/api';
 import CategoryList from './src/videos/containers/category-list.js';
 import Player from './src/player/containers/player';
 import { Provider } from 'react-redux';
-import store from './store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store';
 
-export default class App extends Component {
+type Props = {};
+export default class App extends Component<Props> {
   state = {
-    //suggestionList: [],
-    //categoryList: [],
+    // suggestionList: [],
+    // categoryList: [],
   }
   async componentDidMount() {
     const categoryList = await API.getMovies();
@@ -35,19 +37,22 @@ export default class App extends Component {
     })
   }
   render() {
-    const play = <Player />
     return (
-      <Provider store={store}>
-        <Home>
-          <Header />
-          <Text>buscador</Text>
-          <CategoryList
-            list={this.state.categoryList}
-          />
-          <SuggestionList
-            list={this.state.suggestionList}
-          />
-        </Home>
+      <Provider
+        store={store}
+      >
+        <PersistGate
+          loading={<Text>cargando...</Text>}
+          persistor={persistor}
+        >
+          <Home>
+            <Header />
+            <Player />
+            <Text>buscador</Text>
+            <CategoryList />
+            <SuggestionList />
+          </Home>
+        </PersistGate>
       </Provider>
     );
   }
