@@ -8,6 +8,12 @@ import Empty from '../components/empty';
 import Separator from '../../sections/components/vertical-separator';
 import Suggestion from '../components/suggestion';
 
+function mapStateToProps(state) {
+  return {
+    list: state.suggestionList
+  }
+}
+
 class SuggestionList extends Component {
   keyExtractor = item => item.id.toString()
   renderEmtpy = () => <Empty text="No hay sugerencias :(" />
@@ -35,4 +41,4 @@ class SuggestionList extends Component {
   }
 }
 
-export default SuggestionList
+export default connect(mapStateToProps)(SuggestionList)
