@@ -7,6 +7,7 @@ import Layout from '../components/suggestion-list-layout';
 import Empty from '../components/empty';
 import Separator from '../../sections/components/vertical-separator';
 import Suggestion from '../components/suggestion';
+import { connect } from 'react-redux';
 
 function mapStateToProps(state) {
   return {
