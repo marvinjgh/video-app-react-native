@@ -3,11 +3,10 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store';
 
-import Loading from './src/sections/components/loading';
+import Loading from './src/sections/components/splashscreen';
 import AppLayout from './src/app';
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
   render() {
     return (
       <Provider

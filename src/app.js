@@ -1,37 +1,36 @@
-import React, { Component } from 'react';
-import {
-  Text
-} from 'react-native';
-import { connect } from 'react-redux';
-
-import API from '../utils/api';
-import Home from './screens/containers/home';
-import Header from './sections/components/header';
-import SuggestionList from './videos/containers/suggestion-list';
-import CategoryList from './videos/containers/category-list.js';
-import Movie from './screens/containers/movie';
-import Search from './sections/containers/search';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import API from "../utils/api";
+import Home from "./screens/containers/home";
+import Header from "./sections/components/header";
+import SuggestionList from "./videos/containers/suggestion-list";
+import CategoryList from "./videos/containers/category-list.js";
+import Movie from "./screens/containers/movie";
+import Search from "./sections/containers/search";
 
 class AppLayout extends Component {
   async componentDidMount() {
     const categoryList = await API.getMovies();
     this.props.dispatch({
-      type: 'SET_CATEGORY_LIST',
+      type: "SET_CATEGORY_LIST",
       payload: {
-        categoryList
+        categoryList,
+        categoryLoading: false
       }
-    })
+    });
     const suggestionList = await API.getSuggestion(10);
     this.props.dispatch({
-      type: 'SET_SEGGESTION_LIST',
+      type: "SET_SUGGESTION_LIST",
       payload: {
-        suggestionList
+        suggestionList,
+        suggestionLoading: false
       }
-    })
+    });
+    console.log(suggestionList);
   }
   render() {
     if (this.props.selectedMovie) {
-      return <Movie />
+      return <Movie />;
     }
     return (
       <Home>
@@ -40,14 +39,14 @@ class AppLayout extends Component {
         <CategoryList />
         <SuggestionList />
       </Home>
-    )
+    );
   }
 }
 
 function mapStateToProps(state) {
   return {
-    selectedMovie: state.selectedMovie,
-  }
+    selectedMovie: state.selectedMovie
+  };
 }
 
 export default connect(mapStateToProps)(AppLayout);

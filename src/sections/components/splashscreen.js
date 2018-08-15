@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
+
 function Loading(props) {
   return (
     <View style={styles.container}>

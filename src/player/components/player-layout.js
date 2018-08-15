@@ -1,9 +1,9 @@
 import React from 'react';
 import {
   View,
-  Text,
   StyleSheet
 } from 'react-native';
+import CenterLayout from '../../sections/components/center-layout';
 
 function Layout(props) {
   return (
@@ -11,12 +11,12 @@ function Layout(props) {
       <View style={styles.video}>
         {props.video}
       </View>
-      <View style={styles.overlay}>
+      <CenterLayout>
         {
           props.loading &&
           props.loader
         }
-      </View>
+      </CenterLayout>
       {props.controls}
     </View>
   )
@@ -33,15 +33,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: 'black',
-  },
-  overlay: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    bottom: 0,
-    right: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
   }
 })
 
