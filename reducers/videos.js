@@ -9,12 +9,6 @@ function videos(state = {}, action) {
     case 'SET_SELECTED_MOVIE': {
       return {...state, selectedMovie: action.payload.movie}
     }
-    case 'PLAY_PAUSE_VIDEO': {
-      return {...state, ...action.payload}
-    }
-    case 'VIDEO_STOP_LOADING': {
-      return {...state, ...action.payload}
-    }
     default:
       return state
   }

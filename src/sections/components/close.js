@@ -4,14 +4,15 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
-// TODO: mejorar el icono de cerrar
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 function Close(props) {
   return (
     <TouchableOpacity
       onPress={props.onPress}
       style={styles.container}
     >
-      <Text style={styles.button}>X</Text>
+    <Icon name="close" size={22} color="#ffffff" />
     </TouchableOpacity>
   )
 }

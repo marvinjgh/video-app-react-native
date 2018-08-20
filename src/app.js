@@ -26,7 +26,6 @@ class AppLayout extends Component {
         suggestionLoading: false
       }
     });
-    console.log(suggestionList);
   }
   render() {
     if (this.props.selectedMovie) {

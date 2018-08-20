@@ -17,7 +17,7 @@ class Movie extends Component {
     this.props.dispatch({
       type: 'SET_SELECTED_MOVIE',
       payload: {
-        movie: null,
+        movie: null
       }
     })
   }

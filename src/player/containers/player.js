@@ -4,62 +4,99 @@ import { StyleSheet, ActivityIndicator, Text } from "react-native";
 import Layout from "../components/player-layout";
 import ControlLayout from "../components/control-layout";
 import PlayPause from "../components/play-pause";
-import { connect } from "react-redux";
-import {getTimeFromSec} from "../../../utils/time"
+import TimeText from "../components/time-text";
+import Slider from "../components/progress-slider";
+import Fullscreen from "../components/fullscreen";
 
 // TODO: Completar los botones de control
 
 class Player extends Component {
+  state = {
+    loading: true, // Estado de carga del video
+    paused: false, // Indicador de pausa
+    progress: 0, // Progreso del video entre 0 y 1
+    currentTime: 0, // Tiempo actual en segundos
+    duration: 0, // Duración del vídeo en segundos
+    changeActive: false, // Activo mientras se cambia la posición del vídeo
+    fullscreen: false // Estado de fullscreen
+  };
   onBuffer = ({ isBuffering }) => {
-    this.props.dispatch({
-      type: "VIDEO_STOP_LOADING",
-      payload: {
-        videoLoading: isBuffering
-      }
-    });
+    this.setState({ loading: isBuffering });
   };
   onLoad = ({ duration, currentTime }) => {
-    this.props.dispatch({
-      type: "VIDEO_STOP_LOADING",
-      payload: {
-        videoLoading: false,
-        duration: duration,
-        currentTime: currentTime
-      }
+    this.setState({
+      loading: false,
+      duration: duration,
+      currentTime: currentTime
+    });
+  };
+  onProgress = ({ currentTime, playableDuration, seekableDuration }) => {
+    this.setState({
+      currentTime: currentTime
     });
   };
   playPause = () => {
-    this.props.dispatch({
-      type: "PLAY_PAUSE_VIDEO",
-      payload: {
-        paused: !this.props.paused
-      }
+    this.setState({
+      paused: !this.state.paused
     });
+  };
+  sliderChange = value => {
+    this.setState({
+      currentTime: value,
+      changeActive: true
+    });
+  };
+  sliderFinished = value => {
+    this.setState({
+      currentTime: value,
+      changeActive: false
+    });
+    this.player.seek(value);
+  };
+  fullscreen = () => {
+    this.setState({
+      fullscreen: !this.state.fullscreen
+    });
+    if (!this.state.fullscreen) {
+      this.player.presentFullscreenPlayer();
+    } else {
+      this.player.dismissFullscreenPlayer();
+    }
   };
   render() {
     const uri_video =
       "https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4";
+    const { loading, changeActive, paused, currentTime, duration, fullscreen } = this.state;
     return (
       <Layout
-        loading={this.props.loading}
+        loading={loading}
         video={
           <Video
+            ref={ref => {
+              this.player = ref;
+            }}
             source={{ uri: uri_video }}
             style={styles.video}
             resizeMode="contain"
             onLoad={this.onLoad}
             onBuffer={this.onBuffer}
-            paused={this.props.changeActive ? true : this.props.paused}
+            paused={changeActive ? true : paused}
+            onProgress={this.onProgress}
           />
         }
         loader={<ActivityIndicator color="white" />}
         controls={
           <ControlLayout>
-            <PlayPause onPress={this.playPause} paused={this.props.paused} />
-            <Text>{getTimeFromSec(this.props.currentTime)}</Text>
-            <Text>| progress bar |</Text>
-            <Text>{getTimeFromSec(this.props.duration)}</Text>
-            <Text>fullscreen | </Text>
+            <PlayPause onPress={this.playPause} paused={paused} />
+            <TimeText time={currentTime} />
+            <Slider
+              progress={currentTime}
+              duration={duration}
+              sliderChange={this.sliderChange}
+              sliderFinished={this.sliderFinished}
+            />
+            <TimeText time={duration} />
+            <Fullscreen onPress={this.fullscreen} isFullscreen={fullscreen}/>
           </ControlLayout>
         }
       />
@@ -77,18 +114,4 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps(state) {
-  console.log("map");
-  console.log(state);
-  return {
-    loading: state.videoLoading,
-    paused: state.paused,
-    //progress: state.progress,
-    currentTime: state.currentTime,
-    duration: state.duration,
-    changeActive: state.changeActive
-    //fullscreen: state.fullscreen,
-  };
-}
-
-export default connect(mapStateToProps)(Player);
+export default Player;
