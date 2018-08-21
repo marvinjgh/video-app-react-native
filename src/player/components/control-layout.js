@@ -1,29 +1,32 @@
-import React from 'react';
-import {
-  View,
-  StyleSheet
-} from 'react-native';
+import React from "react";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import CenterLayout from '../../sections/components/center-layout';
 
 function ControlLayout(props) {
   return (
-    <View style={styles.container}>
-      {props.children}
-    </View>
-  )
+    <TouchableOpacity style={styles.superContainer}
+    onPress={props.onPress}>
+      {props.showControls && (
+        <CenterLayout style={styles.container}>{props.children}</CenterLayout>
+      )}
+    </TouchableOpacity>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(0,0,0,.6)',
-    position: 'absolute',
+    backgroundColor: "rgba(0,0,0,.5)",
+    flexDirection: "row",
+    // paddingHorizontal: 10,
+  },
+  superContainer: {
+    backgroundColor: "transparent",
+    position: "absolute",
     left: 0,
     right: 0,
     bottom: 0,
-    height: 35,
-    flexDirection: 'row',
-    //paddingHorizontal: 10,
-    alignItems: 'center',
+    top: 0
   }
-})
+});
 
-export default ControlLayout
+export default ControlLayout;

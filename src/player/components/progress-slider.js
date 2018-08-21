@@ -28,8 +28,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   slider: {
-    paddingVertical: 10,
-    borderRadius: 50
+    //borderRadius: 50
   }
 });
 

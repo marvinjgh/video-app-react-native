@@ -1,33 +1,41 @@
 import React from "react";
-import { View, StyleSheet} from "react-native";
-import TimeText from "../components/time-text";
-import Slider from "../components/progress-slider";
-import Fullscreen from "../components/fullscreen";
+import { View, StyleSheet } from "react-native";
+import TimeText from "./time-text";
+import Slider from "./progress-slider";
+import Fullscreen from "./fullscreen";
 
-function ControlBelow(props) {
-  const { currentTime, duration } = props;
+function ControlBelow({ currentTime, duration, sliderChange, sliderFinished, fullscreen,  isFullscreen}) {
   return (
     <View style={styles.container}>
-      <TimeText time={currentTime} />
-      <Slider progress={currentTime} duration={duration} />
+      <TimeText style={styles.left} time={currentTime} />
+      <Slider
+        progress={currentTime}
+        duration={duration}
+        sliderChange={sliderChange}
+        sliderFinished={sliderFinished}
+      />
       <TimeText time={duration} />
-      <Fullscreen />
+      <Fullscreen style={styles.right} onPress={fullscreen} isFullscreen={isFullscreen} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(0,0,0,.6)',
-    position: 'absolute',
+    position: "absolute",
     left: 0,
     right: 0,
     bottom: 0,
     height: 35,
-    flexDirection: 'row',
-    //paddingHorizontal: 10,
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  left:{
+    paddingLeft:10
+  },
+  right:{
+    paddingHorizontal:10
   }
-})
+});
 
 export default ControlBelow;

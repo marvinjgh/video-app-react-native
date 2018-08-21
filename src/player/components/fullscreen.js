@@ -6,7 +6,7 @@ function FullScreen (props) {
   return (
     <TouchableOpacity
       onPress={props.onPress}
-      style={styles.container}
+      style={[styles.container,props.style]}
       hitSlop={{
         left: 5,
         top: 5,
@@ -25,9 +25,9 @@ function FullScreen (props) {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-    marginVertical: 5,
+    // justifyContent: 'center',
+    // paddingHorizontal: 10,
+    // marginVertical: 5,
     //marginLeft: 10,
   },
 })

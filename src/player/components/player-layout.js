@@ -11,13 +11,13 @@ function Layout(props) {
       <View style={styles.video}>
         {props.video}
       </View>
+      {props.controls}
       <CenterLayout>
         {
           props.loading &&
           props.loader
         }
       </CenterLayout>
-      {props.controls}
     </View>
   )
 }

@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 
 function CenterLayout (props) {
   return(
-    <View  style={styles.overlay}>
+    <View  style={[styles.overlay,props.style]}>
       {props.children}
     </View>
   )
