@@ -104,11 +104,11 @@ class Player extends Component {
     this.setState({
       isFullscreen: !this.state.isFullscreen
     });
-    if (!this.state.isFullscreen) {
+    /*if (!this.state.isFullscreen) {
       this.player.presentFullscreenPlayer();
     } else {
       this.player.dismissFullscreenPlayer();
-    }
+    }*/
   };
   /**
    * Manejo de cuando se preciona el video y muesta/oculta los controles

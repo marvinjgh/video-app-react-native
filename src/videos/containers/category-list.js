@@ -1,26 +1,45 @@
-import React, { Component } from "react";
-import { ActivityIndicator, FlatList } from "react-native";
-import Empty from "../components/empty";
-import Separator from "../../sections/components/horizontal-separator";
-import Category from "../components/category";
-import Layout from "../components/category-list-layout";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import {
+  ActivityIndicator,
+  FlatList
+} from 'react-native';
+import Empty from '../components/empty';
+import Separator from '../../sections/components/horizontal-separator';
+import Category from '../components/category';
+import Layout from '../components/category-list-layout';
+import { connect } from 'react-redux';
 import CenterLayout from '../../sections/components/center-layout';
+import { NavigationActions } from 'react-navigation';
 
 function mapStateToProps(state) {
   return {
-    list: state.categoryList,
-    loading: state.categoryLoading
-  };
+    list: state.videos.categoryList,
+    loading: state.videos.categoryLoading
+  }
 }
 
 class CategoryList extends Component {
-  keyExtractor = item => item.id.toString();
-  renderEmtpy = () => <Empty text="No hay sugerencias :(" />;
-  itemSeparator = () => <Separator />;
-  renderItem = ({ item }) => {
-    return <Category {...item} />;
-  };
+  keyExtractor = item => item.id.toString()
+  renderEmtpy = () => <Empty text="No hay sugerencias :(" />
+  itemSeparator = () => <Separator />
+  viewCategory = (item) => {
+    this.props.dispatch(
+      NavigationActions.navigate({
+        routeName: 'Category',
+        params: {
+          genre: item.genres[0]
+        }
+      })
+    )
+  }
+  renderItem = ({item}) => {
+    return (
+      <Category
+        {...item}
+        onPress={() => { this.viewCategory(item) }}
+      />
+    )
+  }
   render() {
     return (
       <Layout title="Categorias">
@@ -29,17 +48,17 @@ class CategoryList extends Component {
             <ActivityIndicator color="#98ca3f" />
           </CenterLayout>
         ) : (
-          <FlatList
-            horizontal
-            keyExtractor={this.keyExtractor}
-            data={this.props.list}
-            ListEmptyComponent={this.renderEmtpy}
-            ItemSeparatorComponent={this.itemSeparator}
-            renderItem={this.renderItem}
-          />
+        <FlatList
+          horizontal
+          keyExtractor={this.keyExtractor}
+          data={this.props.list}
+          ListEmptyComponent={this.renderEmtpy}
+          ItemSeparatorComponent={this.itemSeparator}
+          renderItem={this.renderItem}
+        />
         )}
       </Layout>
-    );
+    )
   }
 }
 
